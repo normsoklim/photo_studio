@@ -1,0 +1,652 @@
+.page {
+  min-height: 100vh;
+  padding: 55px 24px 80px;
+  background:
+    radial-gradient(circle at 10% 10%, #ffe3f0 0, transparent 30%),
+    radial-gradient(circle at 90% 30%, #e9e2ff 0, transparent 30%),
+    #fff8fc;
+}
+
+.header {
+  text-align: center;
+  margin: 0 auto 35px;
+}
+
+.eyebrow {
+  color: #d46d9f;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.header h1 {
+  color: #bd568c;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 900;
+  margin: 12px 0;
+}
+
+.header p {
+  color: #94768a;
+  font-size: 15px;
+}
+
+.studio {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+  gap: 25px;
+  align-items: start;
+}
+
+.cameraArea,
+.filterPanel {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #f4d9e8;
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: 0 15px 45px rgba(195, 112, 159, 0.09);
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #f5e9f3;
+}
+
+.video,
+.overlay,
+.capturedImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video,
+.overlay {
+  /* Mirroring is applied inline per facingMode (front camera only) so the
+     rear (environment) camera stays true-to-life and the face filter stays
+     aligned with the live view in both modes. */
+}
+
+.overlay {
+  pointer-events: none;
+}
+
+.capturedImage {
+  display: block;
+}
+
+.previewLabel {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #bd568c;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.timerCount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  font-size: clamp(48px, 15vw, 120px);
+  font-weight: 900;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1;
+  letter-spacing: -2px;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 0 25px rgba(189, 86, 140, 0.9),
+    0 0 45px rgba(255, 212, 94, 0.7);
+}
+
+.status {
+  min-height: 24px;
+  text-align: center;
+  margin: 16px 0;
+  color: #a16d8d;
+  font-size: 13px;
+}
+
+.cameraActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.captureButton,
+.secondaryButton {
+  min-height: 46px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.captureButton {
+  background: linear-gradient(135deg, #ff83b9, #c78cff);
+  color: white;
+  box-shadow: 0 7px 18px #e98bb955;
+}
+
+.secondaryButton {
+  background: #fff0f7;
+  color: #bd568c;
+  border: 1px solid #f4c9df;
+}
+
+.captureButton:hover,
+.secondaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryButton.timerActive {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.lightControls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 4px;
+  padding: 14px;
+  background: #fff7fb;
+  border: 1px dashed #f4c9df;
+  border-radius: 22px;
+}
+
+.lightLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #bd568c;
+  cursor: pointer;
+}
+
+.lightLabel input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffd45e;
+}
+
+.lightColorLabel,
+.lightIntensityLabel {
+  font-size: 11px;
+  font-weight: 800;
+  color: #a16d8d;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.lightControls input[type='color'] {
+  width: 36px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.lightControls input[type='range'] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e9c3d8;
+  outline: none;
+  cursor: pointer;
+}
+
+.lightControls input[type='range']::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffd45e;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  appearance: none;
+}
+
+.filterPanel h2 {
+  color: #bd568c;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.filterPanel > p {
+  color: #a58b9b;
+  font-size: 13px;
+  margin: 7px 0 20px;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.filterCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  min-height: 130px;
+  padding: 15px 8px;
+  background: #fff9fc;
+  border: 2px solid #f6e4ee;
+  border-radius: 19px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filterCard:hover {
+  transform: translateY(-3px);
+  border-color: #efa7ca;
+}
+
+.activeFilter {
+  background: #ffeaf4;
+  border-color: #e77eaf;
+  box-shadow: 0 5px 15px #e77eaf25;
+}
+
+.filterEmoji {
+  font-size: 34px;
+}
+
+.filterName {
+  color: #ad5e88;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.filterDescription {
+  color: #a88b9c;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 850px) {
+  .studio {
+    grid-template-columns: 1fr;
+  }
+
+  .filterGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 35px 12px 55px;
+  }
+
+  .cameraArea,
+  .filterPanel {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .preview {
+    border-radius: 15px;
+  }
+
+  .filterGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .captureButton,
+  .secondaryButton {
+    flex: 1;
+  }
+}
+
+.backgroundPanel {
+  margin-top: 24px;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #f4d9e8;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(195, 112, 159, 0.07);
+}
+
+.backgroundPanel h2 {
+  color: #bd568c;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.backgroundPanel > p {
+  color: #a58b9b;
+  font-size: 13px;
+  margin: 7px 0 18px;
+}
+
+.backgroundGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.backgroundCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 115px;
+  padding: 12px 8px;
+  background: #fff8fc;
+  border: 2px solid #f6e4ee;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.backgroundCard:hover {
+  transform: translateY(-3px);
+  border-color: #efa7ca;
+}
+
+.activeBackground {
+  background: #ffeaf4;
+  border-color: #e77eaf;
+  box-shadow: 0 5px 15px #e77eaf25;
+}
+
+.backgroundEmoji {
+  font-size: 30px;
+}
+
+.backgroundName {
+  color: #ad5e88;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.backgroundDescription {
+  color: #a88b9c;
+  font-size: 10px;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .backgroundPanel {
+    padding: 14px;
+  }
+
+  .backgroundGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==============================
+   PIXEL SHADES STUDIO
+   ================================ */
+
+.shadesStudio {
+  margin-top: 18px;
+  padding: 16px;
+  background: #fff7fb;
+  border: 1px solid #f4c9df;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(195, 112, 159, 0.07);
+}
+
+.shadesStudio h2 {
+  color: #bd568c;
+  font-size: 17px;
+  font-weight: 900;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shadesStudio > p {
+  color: #a58b9b;
+  font-size: 12px;
+  margin: 0 0 14px;
+}
+
+.shadesMode {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.shadesModeBtn {
+  flex: 1;
+  padding: 8px 6px;
+  border-radius: 12px;
+  border: 1px solid #f4c9df;
+  background: #ffffff;
+  color: #ad5e88;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.shadesModeBtn:hover {
+  border-color: #efa7ca;
+}
+
+.shadesModeBtn.active {
+  background: #ffeaf4;
+  border-color: #e77eaf;
+  color: #bd568c;
+  box-shadow: 0 4px 12px #e77eaf25;
+}
+
+.shadesPresets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shadesPresetLabel {
+  font-size: 11px;
+  font-weight: 900;
+  color: #a16d8d;
+  margin-bottom: 6px;
+}
+
+.shadesPresetList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.shadesPreset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 6px;
+  border-radius: 14px;
+  border: 1px solid #f4c9df;
+  background: #ffffff;
+  cursor: pointer;
+  transition: 0.2s ease;
+  min-width: 72px;
+}
+
+.shadesPreset:hover {
+  border-color: #efa7ca;
+  transform: translateY(-2px);
+}
+
+.shadesPreset.activePreset {
+  background: #ffeaf4;
+  border-color: #e77eaf;
+  box-shadow: 0 4px 12px #e77eaf25;
+}
+
+.shadesPresetColor {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.shadesPresetName {
+  font-size: 9px;
+  font-weight: 900;
+  color: #ad5e88;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.shadesControls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shadesControl {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.shadesControl label {
+  font-size: 11px;
+  font-weight: 900;
+  color: #a16d8d;
+}
+
+.shadesControl input[type='range'] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #e9c3d8;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.shadesControl input[type='range']::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffd45e;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  appearance: none;
+}
+
+.shadesControl input[type='color'] {
+  width: 100%;
+  height: 32px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}
+
+.shadesPlacement {
+  padding-top: 10px;
+  border-top: 1px dashed #f4c9df;
+}
+
+.shadesPlacement p {
+  color: #a58b9b;
+  font-size: 12px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.shadesPlacementBtns {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.shadesPlacementBtn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #f4c9df;
+  background: #ffffff;
+  color: #ad5e88;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.shadesPlacementBtn:hover {
+  border-color: #efa7ca;
+}
+
+/* Draggable handle used to fit the glasses onto any object or person. */
+.shadesHandle {
+  position: absolute;
+  z-index: 10;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid #e77eaf;
+  box-shadow: 0 4px 14px rgba(201, 86, 136, 0.25);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  cursor: grab;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  touch-action: none;
+}
+
+.shadesHandle:active {
+  cursor: grabbing;
+  border-color: #bd568c;
+  transform: translate(-50%, -50%) scale(0.92);
+  box-shadow: 0 6px 16px rgba(201, 86, 136, 0.35);
+}
+
+@media (max-width: 520px) {
+  .shadesPreset {
+    min-width: 64px;
+    padding: 7px 5px;
+  }
+
+  .shadesPresetName {
+    font-size: 8px;
+  }
+
+  .shadesModeBtn {
+    font-size: 11px;
+    padding: 7px 5px;
+  }
+}
